@@ -6,6 +6,8 @@ class Database
 
 class Column : Object
 	prop name : string
+	construct()
+		name = ""
 
 class Model : Object
 	/* every Model object has one Database object associated with it */
@@ -26,14 +28,17 @@ class Command : Object
 	prop values_commit : list of string
 	prop values_where : list of string
 	prop values_having : list of string
-	/* take list of either String or Colmn objects */	
-	construct (columns : list of Object)
+	/* take list of either String or Colmn objects
+	possibilities for strings: 
+		tablename.columnname
+		columnname // requires "from" clause
+		customexpr?? */	
+	//construct from_strings(columns : list of string)
+	// pass
+	construct(columns : list of Column)
+		var y = new dict of string,Column
 		for c in columns
-			if c isa Column
-				print "kgj"
-			else
-				print ((string)c)
-	//construct with_bar (bar : int)
+			y["as"] = c
 
 init
 	/* test dicts */
@@ -46,6 +51,7 @@ init
 	for s in d.keys
 		print "%s => %s", s, d[s]
 	/* test Command */
-	var cols = new list of Object
-	cols.add((Object)"one")
+	var cols = new list of Column
+	var col1 = new Column
+	cols.add(col1)
 	var c = new Command(cols)
