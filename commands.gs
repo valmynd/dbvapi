@@ -34,11 +34,13 @@ class Command : Object
 		columnname // requires "from" clause
 		customexpr?? */	
 	//construct from_strings(columns : list of string)
-	// pass
+	// init//code that pertains to the initlization of the class
 	construct(columns : list of Column)
 		var y = new dict of string,Column
+		relevant_columns = new dict of string,Column
 		for c in columns
-			y["as"] = c
+			y[c.name] = c // works
+			relevant_columns[c.name] = c // works not
 
 init
 	/* test dicts */
