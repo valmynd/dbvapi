@@ -23,8 +23,8 @@ class Command : Object
 	/* all subclasses need to be able to be converted into each other
 	back and forth, so any information must be avaiable, even if
 	irrelevant for current operation */
-	prop relevant_columns : dict of string,Column
-	prop groupby_columns : dict of string,Column
+	prop relevant_columns : dict of string,string
+	prop groupby_columns : dict of string,string
 	prop values_commit : list of string
 	prop values_where : list of string
 	prop values_having : list of string
@@ -35,12 +35,12 @@ class Command : Object
 		customexpr?? */	
 	//construct from_strings(columns : list of string)
 	// init//code that pertains to the initlization of the class
-	construct(columns : list of Column)
-		var y = new dict of string,Column
-		relevant_columns = new dict of string,Column
+	construct(columns : list of string)
+		var y = new dict of string,string
+		relevant_columns = new dict of string,string
 		for c in columns
-			y[c.name] = c // works
-			relevant_columns[c.name] = c // works not
+			y[c] = c // works
+			relevant_columns[c] = c // works not
 
 init
 	/* test dicts */
@@ -53,7 +53,7 @@ init
 	for s in d.keys
 		print "%s => %s", s, d[s]
 	/* test Command */
-	var cols = new list of Column
-	var col1 = new Column
+	var cols = new list of string
+	var col1 = "asf"
 	cols.add(col1)
 	var c = new Command(cols)
