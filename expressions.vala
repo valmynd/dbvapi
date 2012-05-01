@@ -13,7 +13,7 @@ abstract class Operand : Object {
 		return new Expression(ExprOperator.OR, this, right);
 	}
 	public Expression equals(Value right) {
-		return new Expression(ExprOperator.OR, this, right);
+		return new Expression(ExprOperator.EQ, this, right);
 	}
 }
 
@@ -80,8 +80,8 @@ public enum ExprOperator {
 }
 
 errordomain InvalidExpression {
-    NONEXISTANT_OPERATOR,
-    FOO
+	NONEXISTANT_OPERATOR,
+	FOO
 }
 
 // this function primarily exists for debugging, usually libgda will be used
@@ -124,34 +124,21 @@ string _operator_to_str(ExprOperator o) throws InvalidExpression {
 }
 
 /*
-select().from(MyModel).where(
- 	MyModel.age.equals(50).and(
-		MyModel.fullname.like("%huber")
- 	).or(
-		MyModel.pk.equals(1)
-	)
-)
 => Operate on Column objects instead of strings containing their names
 => Accept Value, Column, Expression objects as Operands
 => https://live.gnome.org/Vala/ValueSample
 plan: dependency on libgda only if relational backend is used, native impl. shouldn't need to have libgda
 read https://live.gnome.org/Vala/Tutorial#Methods_With_Syntax_Support
 read http://developer.gimp.org/api/2.0/app/app-config-interface.html
-class Column : Operand {
-	public override string to_string() {
-		return "Hallo";
-	}
-}
-int main () {
+read https://github.com/antono/vala-object
+*/
+
+void test_expressions() {
 	var x = new Column();
 	var y = new Column();
 	var z = x.and(y);
-	var a = new Expression(ExprOperator.EQ, "as", "yahoo");
-	var b = new Expression(ExprOperator.EQ, a, z);
-	//Value v = b;
-	//print("%s\n", v.type().name());
-	if(a is Expression)
+	var a = new Expression(ExprOperator.GT, "as", "yahoo");
+	var b = a.equals(z).or(a);
+	if(x is Operand)
 		print("%s\n", b.to_string());
-	return 0;
 }
-*/

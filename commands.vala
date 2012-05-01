@@ -5,17 +5,17 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 */
 
 using Gee;
-using Gda;
+//using Gda;
 
 class Database : Object {
-	public ArrayList<Model> models;
-	public Model user_model;
+	//public ArrayList<Model> models;
+	//public Model user_model;
 }
 
 class Column : Operand {
 	public string _name;
 	construct {
-		_name = "";
+		_name = "cn";
 	}
 	public Column() {
 	}
@@ -26,9 +26,9 @@ class Column : Operand {
 
 class Model : Object {
 	/* every Model object has one Database object associated with it */
-	public Database db;
+	//public Database db;
 	/* access Column names by columns.keys; Column objects by columns.values */
-	public ArrayList<Column> columns;
+	//public ArrayList<Column> columns;
 }
 
 /* Easy interface to GdaSqlBuilder
@@ -53,15 +53,16 @@ abstract class Command : Object {
 		values_where = new ValueArray(0);
 		values_having = new ValueArray(0);
 	}
-	public void values_v(ValueArray vals) {
+	/*public void values_v(ValueArray vals) {
 		free(values_commit); // gets replaced!
 		values_commit = vals.copy();
-	}
+	}*/
 	/** returns all values related to this command depending on it's type */
 	public abstract ValueArray get_values();
 }
 
 class Insert : Command {
+	// http://www.swig.org/Doc1.3/Varargs.html
 	// [GIR (name = "foo")]
 	public Insert(ArrayList<Column> into_columns) {
 		relevant_columns = into_columns;
@@ -92,8 +93,16 @@ class Delete : Command {
 }
 
 class Select : Command {
-	public Select(ArrayList<Column> columns) {
+	/*public Select(ArrayList<Column> columns) {
 		relevant_columns = columns;
+	}*/
+	public Select(Column c1, ...) {
+		/*var l = va_list();
+		while (true) {
+			Column? cx = l.arg();
+			if (cx == null) break;  // end of varargs
+			//print(cx._name);
+		};*/
 	}
 	public override ValueArray get_values() {
 		// values_commit + values_having # ensure the right order
@@ -104,6 +113,39 @@ class Select : Command {
 	}
 }
 
+/*
+select().from(MyModel).where(
+ 	MyModel.age.equals(50).and(
+		MyModel.fullname.like("%huber")
+ 	).or(
+		MyModel.pk.equals(1)
+	)
+)*/
+
+class Adress : Model {
+	public static Column street { get; set; }
+	public static Column housenr { get; set; }
+	construct {
+		street = new Column();
+		housenr = new Column();
+	}
+}
+
+class DatabaseInstance : Database {
+	construct {
+	}
+}
+
 int main () {
+	test_expressions();
+	var x = new Adress();
+	var s = new Select(x.street);
+	print("%s\n", Adress.street._name);
+	s.get_values();
+	// https://live.gnome.org/Vala/ValaForCSharpProgrammers#Reflection
+	var obj_class = (ObjectClass) typeof(Adress).class_ref();
+	var properties = obj_class.list_properties();
+	foreach(var prop in properties)
+		print("col: %s nick: %s\n", prop.name, prop.get_nick());
 	return 0;
 }

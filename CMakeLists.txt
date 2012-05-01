@@ -42,7 +42,8 @@ link_directories(${LIB_PATHS})
 
 set(VALA_SRC
 	expressions.vala
-	commands.vala#test.gs#commands.gs
+	commands.vala
+	#test.vala
 )
 
 vala_precompile(VALA_C
