@@ -1,15 +1,26 @@
+/*
+Copyright (C) 2012 C.Wilhelm
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*/
+
 using Gee;
 using Gda;
 
-class Database {
+class Database : Object {
 	public ArrayList<Model> models;
 	public Model user_model;
 }
 
-class Column : Object {
-	public string name;
+class Column : Operand {
+	public string _name;
 	construct {
-		name = "";
+		_name = "";
+	}
+	public Column() {
+	}
+	public override string to_string() {
+		return _name;
 	}
 }
 
@@ -42,8 +53,9 @@ abstract class Command : Object {
 		values_where = new ValueArray(0);
 		values_having = new ValueArray(0);
 	}
-	public void values(ValueArray vals) {
-		//values_commit = vals; // replaces them!
+	public void values_v(ValueArray vals) {
+		free(values_commit); // gets replaced!
+		values_commit = vals.copy();
 	}
 	/** returns all values related to this command depending on it's type */
 	public abstract ValueArray get_values();
