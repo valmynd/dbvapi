@@ -141,7 +141,7 @@ int main () {
 	test_expressions();
 	var x = new Adress();
 	var s = new Select(x.street);
-	print("%s\n", Adress.street._name);
+	//print("%s\n", Adress.street._name);
 	// Adress.street.like("%Avenue)
 	// print(oneadressobj.street) would print "Park Avenue"
 	//s.get_values();

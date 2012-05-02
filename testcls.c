@@ -22,8 +22,8 @@ typedef struct _AdressClass AdressClass;
 
 struct _Adress {
 	GObject parent_instance;
-	gchar* _street;
-	gchar* _housenr;
+	gchar* street;
+	gchar* housenr;
 };
 
 struct _AdressClass {
@@ -66,7 +66,7 @@ const gchar* adress_get_street (Adress* self) {
 	const gchar* result;
 	const gchar* _tmp0_;
 	g_return_val_if_fail (self != NULL, NULL);
-	_tmp0_ = self->_street;
+	_tmp0_ = self->street;
 	result = _tmp0_;
 	return result;
 }
@@ -78,8 +78,8 @@ void adress_set_street (Adress* self, const gchar* value) {
 	g_return_if_fail (self != NULL);
 	_tmp0_ = value;
 	_tmp1_ = g_strdup (_tmp0_);
-	_g_free0 (self->_street);
-	self->_street = _tmp1_;
+	_g_free0 (self->street);
+	self->street = _tmp1_;
 	g_object_notify ((GObject *) self, "street");
 }
 
@@ -88,7 +88,7 @@ const gchar* adress_get_housenr (Adress* self) {
 	const gchar* result;
 	const gchar* _tmp0_;
 	g_return_val_if_fail (self != NULL, NULL);
-	_tmp0_ = self->_housenr;
+	_tmp0_ = self->housenr;
 	result = _tmp0_;
 	return result;
 }
@@ -100,8 +100,8 @@ void adress_set_housenr (Adress* self, const gchar* value) {
 	g_return_if_fail (self != NULL);
 	_tmp0_ = value;
 	_tmp1_ = g_strdup (_tmp0_);
-	_g_free0 (self->_housenr);
-	self->_housenr = _tmp1_;
+	_g_free0 (self->housenr);
+	self->housenr = _tmp1_;
 	g_object_notify ((GObject *) self, "housenr");
 }
 
@@ -119,16 +119,16 @@ static void adress_instance_init (Adress * self) {
 	gchar* _tmp0_;
 	gchar* _tmp1_;
 	_tmp0_ = g_strdup ("");
-	self->_street = _tmp0_;
+	self->street = _tmp0_;
 	_tmp1_ = g_strdup ("");
-	self->_housenr = _tmp1_;
+	self->housenr = _tmp1_;
 }
 
 static void adress_finalize (GObject* obj) {
 	Adress * self;
 	self = ADRESS (obj);
-	_g_free0 (self->_street);
-	_g_free0 (self->_housenr);
+	_g_free0 (self->street);
+	_g_free0 (self->housenr);
 	G_OBJECT_CLASS (adress_parent_class)->finalize (obj);
 }
 
@@ -187,7 +187,7 @@ gint _vala_main (void) {
 	g_value_set_string (&val, "hello");
 	g_object_set_property(G_OBJECT (x), "street", &val);
 	/* printf */
-	g_printf("%s\n", x->_street);
+	g_printf("%s\n", x->street);
 	_g_object_unref0 (x);//_adress_unref0 (x);
 	return 0;
 }
