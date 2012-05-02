@@ -29,17 +29,17 @@ template <typename T> class Column {
 		}
 };
  
-struct Bar {
-	Column <int> alpha;
-	Column <float> bravo;
-	Column <string> str;
+struct Adress {
+	Column <string> street;
+	Column <int> postalcode;
+	Column <float> longitude;
 };
  
 int main () { 
-	Bar bar;
-	bar.alpha = 2;
-	bar.bravo = 2.5f;
-	bar.str = string("2");
-	cout << bar.alpha << "\n" << bar.bravo << "\n" << bar.str << endl;
+	Adress bar;
+	bar.postalcode = 2;
+	bar.longitude = 2.5f;
+	bar.street = string("Park Avenue");
+	cout << bar.postalcode << "\n" << bar.longitude << "\n" << bar.street << endl;
 	return 0;
 }
