@@ -100,7 +100,7 @@ class Select : Command {
 		/*var l = va_list();
 		while (true) {
 			Column? cx = l.arg();
-			if (cx == null) break;  // end of varargs
+			if (cx == null) break;	// end of varargs
 			//print(cx._name);
 		};*/
 	}
@@ -120,11 +120,12 @@ select().from(MyModel).where(
  	).or(
 		MyModel.pk.equals(1)
 	)
-)*/
+)
+http://code.google.com/p/sqlheavy/wiki/UserGuide#ORM_Generator */
 
 class Adress : Model {
-	public static Column street { get; set; }
-	public static Column housenr { get; set; }
+	public Column street;// { get; set; }
+	public Column housenr;// { get; set; }
 	construct {
 		street = new Column();
 		housenr = new Column();
@@ -141,7 +142,10 @@ int main () {
 	var x = new Adress();
 	var s = new Select(x.street);
 	print("%s\n", Adress.street._name);
-	s.get_values();
+	// Adress.street.like("%Avenue)
+	// print(oneadressobj.street) would print "Park Avenue"
+	//s.get_values();
+	// \n#line.*\n
 	// https://live.gnome.org/Vala/ValaForCSharpProgrammers#Reflection
 	var obj_class = (ObjectClass) typeof(Adress).class_ref();
 	var properties = obj_class.list_properties();
