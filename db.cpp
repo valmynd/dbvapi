@@ -9,40 +9,37 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 using namespace std;
  
 // http://en.wikipedia.org/wiki/Property_%28programming%29#C.2B.2B
-class IntegerColumn {
+template <typename T> class Column {
 	private:
-		int value;
+		T value;
 	public:
-		int& operator= (const int &i) {
+		T & operator = (const T &i) {
 			return value = i;
 		}
-		operator int const& () const {
+		operator T const & () const {
 			return value;
 		}
-};
-
-class StringColumn {
-	private:
-		string value;
-	public:
-		string& operator= (const string &i) {
-			return value = i;
+		friend inline ostream &operator<<(ostream &stream, Column const &obj) {
+			stream << obj.value;
+			return stream;
 		}
-		operator string const& () const {
-			return value;
+		friend inline istream &operator>>(istream &stream, Column const &obj) {
+			stream >> obj.value;
+			return stream;
 		}
 };
  
-class Adress {
-	public:
-		StringColumn street;
-		IntegerColumn houseno;
+struct Bar {
+	Column <int> alpha;
+	Column <float> bravo;
+	Column <string> str;
 };
  
-int main () {
-	Adress x;
-	x.street = "Hao";
-	x.houseno = 2;
-	cout << x.street << x.houseno << endl;
+int main () { 
+	Bar bar;
+	bar.alpha = 2;
+	bar.bravo = 2.5f;
+	bar.str = string("2");
+	cout << bar.alpha << "\n" << bar.bravo << "\n" << bar.str << endl;
 	return 0;
 }
